@@ -17,22 +17,22 @@
 </template>
 
 <script type="text/ecmascript-6">
-import header from './components/header/header.vue';
+  import header from './components/header/header.vue'
 
-export default{
-  components: {
-    'v-header': header
+  export default{
+    components: {
+      'v-header': header
+    }
   }
-};
 </script>
 
 <style rel="stylesheet/stylus" lang="stylus">
-    .tab
-      display flex
-      height 40px
-      line-height 40px
-      width 100%
-      .tebItem
-        flex 1
-        text-align center
+  .tab
+    display flex
+    height 40px
+    line-height 40px
+    width 100%
+    .tebItem
+      flex 1
+      text-align center
 </style>

@@ -18,8 +18,7 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    //无分号报错
-    'semi':['error','always'],
+    "semi": "error",
     'indent':0
   }
 }
