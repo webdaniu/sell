@@ -35,4 +35,10 @@
     .tebItem
       flex 1
       text-align center
+      a
+        display block
+        color rgb(77,85,93)
+        font-size 28px
+        &.v-link-active
+          color rgb(240,20,20)
 </style>
