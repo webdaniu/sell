@@ -2,11 +2,17 @@
   <div id="app">
     <v-header></v-header>
     <div class="tab">
-      <div class="tebItem">商品</div>
-      <div class="tebItem">评论</div>
-      <div class="tebItem">商家</div>
+      <div class="tebItem">
+        <a v-link="{path:'/goods'}">商品</a>
+      </div>
+      <div class="tebItem">
+        <a v-link="{path:'/ratings'}">评论</a>
+      </div>
+      <div class="tebItem">
+        <a v-link="{path:'/seller'}">商家</a>
+      </div>
     </div>
-    <div class="content">i am content</div>
+    <router-view></router-view>
   </div>
 </template>
 
