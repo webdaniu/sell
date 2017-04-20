@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <v-header></v-header>
     <div class="tab">
       <div class="tebItem">
@@ -27,7 +27,6 @@ export default{
 </script>
 
 <style rel="stylesheet/stylus" lang="stylus">
-  #app
     .tab
       display flex
       height 40px
