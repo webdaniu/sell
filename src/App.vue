@@ -19,11 +19,21 @@
 <script type="text/ecmascript-6">
   import header from './components/header/header.vue'
 
+  const ERR_OK = 0
+
   export default{
     data() {
       return {
         seller: {}
       }
+    },
+    created() {
+      this.$http.get('/api/seller').then((responce) => {
+        responce = responce.body
+        if (responce.errno === ERR_OK) {
+          this.seller = responce.data
+        }
+      })
     },
     components: {
       'v-header': header
