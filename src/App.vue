@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-header></v-header>
-    <div class="tab">
+    <div class="tab border-1px">
       <div class="tebItem">
         <a v-link="{path:'/goods'}">商品</a>
       </div>
@@ -27,11 +27,13 @@
 </script>
 
 <style rel="stylesheet/stylus" lang="stylus">
+  @import "common/stylus/mixin.styl"
   .tab
     display flex
+    width 100%
     height 40px
     line-height 40px
-    width 100%
+    border-1px(rgba(7,17,27,0.1))
     .tebItem
       flex 1
       text-align center
