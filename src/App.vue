@@ -29,9 +29,10 @@
 <style rel="stylesheet/stylus" lang="stylus">
   .tab
     display flex
-    height 40px
-    line-height 40px
     width 100%
+    height 40px
+    border-bottom 1px solid rgba(7,17,27,0.1)
+    line-height 40px
     .tebItem
       flex 1
       text-align center
