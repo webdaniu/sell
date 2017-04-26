@@ -10,7 +10,7 @@ import 'common/stylus/index.styl'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-// 注册路由组件
+// 注册组件
 let app = Vue.extend(App)
 
 // 实例化路由

@@ -17,7 +17,6 @@ var app = express();
 
 //读取数据
 var appData = require('../data.json');
-//商家数据
 var seller = appData.seller;
 var goods = appData.goods;
 var ratings = appData.ratings; //评论
