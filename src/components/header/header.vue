@@ -1,9 +1,11 @@
 <template>
   <div class="header">
     <div class="content-wrapper">
+      <!--图标-->
       <div class="avatar">
         <img width="64" height="64" :src="seller.avatar" alt="">
       </div>
+      <!--内容-->
       <div class="content">
         <div class="title">
           <span class="brand"></span>
@@ -17,19 +19,23 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div @click="showDetail" v-if="seller.supports" class="support-count">
         <span class="count">
           {{seller.supports.length}}个
         </span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <!--公告-->
+    <div @click="showDetail" class="bulletin-wrapper">
       <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span><i class="icon-keyboard_arrow_right"></i>
     </div>
+    <!--背景图片-->
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%">
     </div>
+    <!--详情浮层-->
+    <div v-show="detailShow" class="detail"></div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -41,6 +47,16 @@
     },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invocie', 'guaranee']
+    },
+    data() {
+      return {
+        detailShow: false
+      }
+    },
+    methods: {
+      showDetail() {
+        this.detailShow = true
+      }
     }
   }
 </script>
@@ -48,6 +64,7 @@
   @import "../../common/stylus/mixin"
   .header
     position relative
+    overflow hidden
     background-color rgba(7,17,27,0.5)
     color #fff
     .content-wrapper
@@ -155,4 +172,13 @@
       height 100%
       z-index -1
       filter blur(10px)
+    .detail
+      position fixed
+      top 0
+      left 0
+      overflow auto
+      z-index 100
+      width 100%
+      height 100%
+      background rgba(7,17,27,0.8)
 </style>
