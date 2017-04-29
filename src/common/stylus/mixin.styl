@@ -1,6 +1,6 @@
 border-1px(rgba)
   position relative
-  &::after
+  &:after
     position: absolute
     left 0
     bottom 0
@@ -8,6 +8,10 @@ border-1px(rgba)
     display block
     border-top 1px solid rgba
     content ' '
+
+border-none()
+  &:after
+    display none
 
 bg-image($url)
   background-image url($url + "@2x.png")
