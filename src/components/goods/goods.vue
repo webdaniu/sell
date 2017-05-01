@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
-        <li v-for="item in goods" class="menu-item">
+        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}">
           <span class="text border-1px">
             <span v-show="item.type > 0" :class="classMap[item.type]" class="icon"></span>
             {{item.name}}
@@ -12,7 +12,7 @@
     </div>
     <div class="foods-wrapper" v-el:foods-wrapper>
       <ul>
-        <li class="food-list" v-for="item in goods">
+        <li class="food-list food-list-hook" v-for="item in goods">
           <!-- 标题-->
           <h1 class="title">{{item.name}}</h1>
           <ul>
@@ -54,7 +54,20 @@
     data() {
       return {
         goods: [],
-        listheight: []
+        listHeight: [],
+        scrollY: 0
+      }
+    },
+    computed: {
+      currentIndex() {
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i]
+          let height2 = this.listHeight[i + 1]
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i
+          }
+        }
+        return 0
       }
     },
     created() {
@@ -65,7 +78,7 @@
           this.goods = responce.data
           this.$nextTick(() => {
             this._initScroll()
-            this.calculateHeight()
+            this._calculateHeight()
           })
         }
       })
@@ -73,10 +86,20 @@
     methods: {
       _initScroll() {
         this.menuScroll = new BScroll(this.$els.menuWrapper, {})
-        this.foodsScroll = new BScroll(this.$els.foodsWrapper, {})
+        this.foodsScroll = new BScroll(this.$els.foodsWrapper, {probeType: 3})
+        this.foodsScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y))
+        })
       },
-      calculateHeight() {
-
+      _calculateHeight() {
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+        let height = 0
+        this.listHeight.push(height)
+        for (let i = 0; i < foodList.length; i++) {
+          let item = foodList[i]
+          height += item.clientHeight
+          this.listHeight.push(height)
+        }
       }
     }
   }
@@ -102,6 +125,14 @@
         height 54px
         padding 0 12px
         line-height 14px
+        &.current
+          position relative
+          z-index 10
+          margin-top -1px
+          background #fff
+          font-weight 700
+          .text
+            border-none()
         .icon
           display inline-block
           vertical-align middle
