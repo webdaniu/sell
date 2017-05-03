@@ -2,7 +2,7 @@
   <div class="goods">
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
-        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}">
+        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}" @click="selectMenu($index,$event)">
           <span class="text border-1px">
             <span v-show="item.type > 0" :class="classMap[item.type]" class="icon"></span>
             {{item.name}}
@@ -85,7 +85,9 @@
     },
     methods: {
       _initScroll() {
-        this.menuScroll = new BScroll(this.$els.menuWrapper, {})
+        this.menuScroll = new BScroll(this.$els.menuWrapper, {
+          click: true
+        })
         this.foodsScroll = new BScroll(this.$els.foodsWrapper, {probeType: 3})
         this.foodsScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y))
@@ -100,6 +102,14 @@
           height += item.clientHeight
           this.listHeight.push(height)
         }
+      },
+      selectMenu(index, event) {
+        if (!event._constructed) {
+          return
+        }
+        let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
       }
     }
   }
@@ -154,7 +164,7 @@
         .text
           display table-cell
           width 56px
-          border-1px(rgba(7,17,27,0.1))
+          border-1px(rgba(7, 17, 27, 0.1))
           vertical-align middle
           font-size 12px
     .foods-wrapper
@@ -166,12 +176,12 @@
           line-height 26px
           border-left 2px solid #d9dde1
           font-size 12px
-          color rgb(147,153,159)
+          color rgb(147, 153, 159)
         .food-item
           display flex
           margin 18px
           padding-bottom 18px
-          border-1px(rgba(7,17,27,0.1))
+          border-1px(rgba(7, 17, 27, 0.1))
           &:last-child
             border-none()
             margin-bottom 0
@@ -185,28 +195,28 @@
             .name
               line-height 14px
               font-size 14px
-              color rgb(7,17,27)
+              color rgb(7, 17, 27)
               padding 2px 0 8px 0
             .desc
               line-height 10px
               font-size 10px
-              color rgb(147,153,159)
+              color rgb(147, 153, 159)
               margin-bottom 8px
             .extra
               line-height 10px
               font-size 10px
-              color rgb(147,153,159)
+              color rgb(147, 153, 159)
               .count
                 margin-right 12px
             .price
               line-height 24px
               .newPrice
                 font-size 14px
-                color rgb(240,20,20)
+                color rgb(240, 20, 20)
                 font-weight 700
               .oldPrice
                 font-size 10px
-                color rgb(147,153,159)
+                color rgb(147, 153, 159)
                 font-weight 700
 
 
