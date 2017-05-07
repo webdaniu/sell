@@ -45,7 +45,7 @@
       </ul>
     </div>
     <!--购物车-->
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"
+    <shopcart v-ref:shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"
               :select-foods="selectFoods"></shopcart>
   </div>
 </template>
@@ -133,7 +133,12 @@
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
       },
-      _drop(target) {}
+      _drop(target) {
+        // 体验优化，异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target)
+        })
+      }
     },
     components: {
       shopcart,
