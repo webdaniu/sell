@@ -132,11 +132,18 @@
         let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
-      }
+      },
+      _drop(target) {}
     },
     components: {
       shopcart,
       cartcontrol
+    },
+    events: {
+      // 接受子组件中的按钮参数
+      'cart.add'(target) {
+        this._drop(target)
+      }
     }
   }
 </script>

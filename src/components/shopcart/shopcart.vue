@@ -17,11 +17,38 @@
         </div>
       </div>
     </div>
+    <!--小球-->
+    <div class="ball-container">
+      <div v-for="ball in balls" v-show="ball.show" class="ball">
+        <div class="inner"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
+    data() {
+      return {
+        balls: [
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          }
+        ]
+      }
+    },
     props: {
       selectFoods: {
         type: Array,
@@ -74,6 +101,10 @@
         } else {
           return 'enough'
         }
+      }
+    },
+    methods: {
+      drop(el) {
       }
     }
   }
@@ -168,4 +199,12 @@
           &.enough
             background #00b43c
             color #fff
+    .ball-container
+      transition all 0.4s
+      .inner
+        width 16px
+        height 16px
+        border-radius 50%
+        background rgb(0, 160, 220)
+        transition all 0.4s
 </style>
