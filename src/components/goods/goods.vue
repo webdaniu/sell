@@ -2,7 +2,8 @@
   <div class="goods">
     <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
-        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}" @click="selectMenu($index,$event)">
+        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}"
+            @click="selectMenu($index,$event)">
           <span class="text border-1px">
             <span v-show="item.type > 0" :class="classMap[item.type]" class="icon"></span>
             {{item.name}}
@@ -43,7 +44,9 @@
         </li>
       </ul>
     </div>
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <!--购物车-->
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"
+              :select-foods="selectFoods"></shopcart>
   </div>
 </template>
 
@@ -76,6 +79,17 @@
           }
         }
         return 0
+      },
+      selectFoods() {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     created() {
@@ -230,7 +244,6 @@
                 font-size 10px
                 color rgb(147, 153, 159)
                 font-weight 700
-
 
             .cartcontrol-wrapper
               position absolute
