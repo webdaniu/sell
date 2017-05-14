@@ -17,7 +17,7 @@
           <!-- 标题-->
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
+            <li v-for="food in item.foods" @click="selectFood(food,$event)" class="food-item border-1px">
               <div class="icon">
                 <!--图片-->
                 <img width="57" height="57" :src="food.icon" alt="">
@@ -48,12 +48,14 @@
     <shopcart v-ref:shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"
               :select-foods="selectFoods"></shopcart>
   </div>
+  <food :food="selectedFood" v-ref:food></food>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
   import shopcart from 'components/shopcart/shopcart'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
+  import food from 'components/food/food'
 
   const ERR_OK = 0
   export default {
@@ -66,7 +68,8 @@
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {}
       }
     },
     computed: {
@@ -133,6 +136,14 @@
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
       },
+      // 点击商品进入详情页
+      selectFood(food, event) {
+        if (!event._constructed) {
+          return
+        }
+        this.selectedFood = food
+        this.$refs.food.show()
+      },
       _drop(target) {
         // 体验优化，异步执行下落动画
         this.$nextTick(() => {
@@ -142,7 +153,8 @@
     },
     components: {
       shopcart,
-      cartcontrol
+      cartcontrol,
+      food
     },
     events: {
       // 接受子组件中的按钮参数
