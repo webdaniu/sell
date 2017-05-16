@@ -1,5 +1,5 @@
 <template>
-  <div class="ratings">
+  <div class="ratings" v-el:ratings>
     <div class="ratings-content">
       <!--概览-->
       <div class="overview">
@@ -36,7 +36,7 @@
         <ul>
           <li class="rating-item" v-for="rating in ratings">
             <div class="avatar">
-              <img :src="rating.avatar">
+              <img :src="rating.avatar" width="28" height="28">
             </div>
             <div class="content">
               <h1 class="name">
@@ -51,6 +51,9 @@
                 <span class="icon-thumb_up"></span>
                 <span v-for="item in rating.recomment">{{item}}</span>
               </div>
+              <div class="time">
+                {{rating.rateTime | formatDate}}
+              </div>
             </div>
           </li>
         </ul>
@@ -60,9 +63,11 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import BScroll from 'better-scroll'
   import star from 'components/star/star'
   import ratingselect from 'components/ratingselect/ratingselect'
   import split from 'components/split/split'
+  import { formatDate } from '../../common/js/date'
 
   const ALL = 2
   const ERR_OK = 0
@@ -86,8 +91,19 @@
         response = response.body
         if (response.errno === ERR_OK) {
           this.ratings = response.data
+          this.$nextTick(() => {
+            this.scroll = new BScroll(this.$els.ratings, {
+              click: true
+            })
+          })
         }
       })
+    },
+    filters: {
+      formatDate(time) {
+        let date = new Date(time)
+        return formatDate(date, 'yyyy-MM-dd hh:mm')
+      }
     },
     components: {
       star,
