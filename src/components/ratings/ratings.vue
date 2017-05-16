@@ -27,20 +27,72 @@
           </div>
         </div>
       </div>
+      <split></split>
+      <!--评价列表切换组件-->
+      <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc"
+                    :ratings="ratings"></ratingselect>
+      <!--评价列表-->
+      <div class="rating-wrapper">
+        <ul>
+          <li class="rating-item" v-for="rating in ratings">
+            <div class="avatar">
+              <img :src="rating.avatar">
+            </div>
+            <div class="content">
+              <h1 class="name">
+                {{rating.username}}
+              </h1>
+              <div class="star-wrapper">
+                <star :size="24" :score="rating.score"></star>
+                <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
+              </div>
+              <p class="text">{{rating.text}}</p>
+              <div class="recomment" v-show="rating.recomment && rating.recomment.length">
+                <span class="icon-thumb_up"></span>
+                <span v-for="item in rating.recomment">{{item}}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import star from 'components/star/star'
+  import ratingselect from 'components/ratingselect/ratingselect'
+  import split from 'components/split/split'
+
+  const ALL = 2
+  const ERR_OK = 0
+
   export default {
     props: {
       seller: {
         type: Object
       }
     },
+    data() {
+      return {
+        ratings: [],
+        selectType: ALL,
+        onlyContent: true
+      }
+    },
+    created() {
+      // 获取评论列表数据
+      this.$http.get('api/ratings').then((response) => {
+        response = response.body
+        if (response.errno === ERR_OK) {
+          this.ratings = response.data
+        }
+      })
+    },
     components: {
-      star
+      star,
+      ratingselect,
+      split
     }
   }
 </script>
