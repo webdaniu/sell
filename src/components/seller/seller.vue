@@ -1,5 +1,5 @@
 <template>
-  <div class="seller">
+  <div class="seller" v-el:seller>
     <div class="seller-content">
       <!--概览-->
       <div class="overview">
@@ -53,6 +53,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import BScroll from 'better-scroll'
   import star from 'components/star/star'
   import split from 'components/split/split'
   export default {
@@ -63,6 +64,12 @@
     },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    },
+    ready() {
+      console.log(this.seller)
+      this.scroll = new BScroll(this.$els.seller, {
+        click: true
+      })
     },
     components: {
       star,
@@ -141,6 +148,8 @@
           padding 16px 12px
           font-size 0
           border-1px(rgba(7, 17, 27, 0.1))
+          &:last-child
+            border-none()
         .icon
           display inline-block
           vertical-align top
