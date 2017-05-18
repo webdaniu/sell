@@ -52,8 +52,8 @@
       <!--商家实景-->
       <div class="pics">
         <h1 class="title">商家实景</h1>
-        <div class="pic-wrapper">
-          <ul class="pic-list">
+        <div class="pic-wrapper" v-el:pic-wrapper>
+          <ul class="pic-list" v-el:pic-list>
             <li class="pic-item" v-for="pic in seller.pics">
               <img :src="pic" width="120" height="90">
             </li>
@@ -81,6 +81,22 @@
       this.scroll = new BScroll(this.$els.seller, {
         click: true
       })
+      if (this.seller.pics) {
+        let picWidth = 120
+        let margin = 6
+        let width = (picWidth + margin) * this.seller.pics.length - margin
+        this.$els.picList.style.width = width + 'px'
+        this.$nextTick(() => {
+          if (!this.picScroll) {
+            this.picScroll = new BScroll(this.$els.picWrapper, {
+              scrollX: true,
+              eventPassthrough: 'vertical'
+            })
+          } else {
+            this.picScroll.refresh()
+          }
+        })
+      }
     },
     components: {
       star,
